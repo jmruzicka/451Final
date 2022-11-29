@@ -8,7 +8,7 @@ from PIL import Image
 
 
 # Load  model a 
-model = joblib.load(open("model-v1.joblib","rb"))
+model = joblib.load(open("model-v1 (3).joblib","rb"))
 
 def data_preprocessor(df):
     """this function preprocess the user input
