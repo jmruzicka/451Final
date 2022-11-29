@@ -23,7 +23,7 @@ def visualize_confidence_level(prediction_proba):
     return type : matplotlib bar chart  
     """
     data = (prediction_proba[0]*100).round(2)
-    grad_percentage = pd.DataFrame(data = data,columns = ['Percentage'],index = ['Low','Ave','High'])
+    grad_percentage = pd.DataFrame(data = data,columns = ['Postseason'],index = ['Champions','Runner-Up','Final Four','Elite Eight','Sweet Sixteen','Round of 32','Round of 64', 'No Dancing for your team'])
     ax = grad_percentage.plot(kind='barh', figsize=(7, 4), color='#722f37', zorder=10, width=0.5)
     ax.legend().set_visible(False)
     ax.set_xlim(xmin=0, xmax=100)
@@ -40,20 +40,20 @@ def visualize_confidence_level(prediction_proba):
         ax.axvline(x=tick, linestyle='dashed', alpha=0.4, color='#eeeeee', zorder=1)
 
     ax.set_xlabel(" Percentage(%) Confidence Level", labelpad=2, weight='bold', size=12)
-    ax.set_ylabel("Wine Quality", labelpad=10, weight='bold', size=12)
+    ax.set_ylabel("Finish", labelpad=10, weight='bold', size=12)
     ax.set_title('Prediction Confidence Level ', fontdict=None, loc='center', pad=None, weight='bold')
 
     st.pyplot()
     return
 
 st.write("""
-# Wine Quality Prediction ML Web-App 
-This app predicts the ** Quality of Wine **  using **wine features** input via the **side panel** 
+# March Madness Finish Prediction 
+This app predicts the postseason finish using basketball statistics input via the **side panel** 
 """)
 
 #read in wine image and render with streamlit
-image = Image.open('wine_image.png')
-st.image(image, caption='wine company',use_column_width=True)
+image = Image.open('March_Madness_logo.svg.png')
+st.image(image, caption='March Madness',use_column_width=True)
 
 st.sidebar.header('User Input Parameters') #user input parameter collection with streamlit side bar
 
@@ -63,31 +63,28 @@ def get_user_input():
     this function is used to get user input using sidebar slider and selectbox 
     return type : pandas dataframe
     """
-    wine_type = st.sidebar.selectbox("Select Wine type",("white", "red"))
-    fixed_acidity = st.sidebar.slider('fixed acidity', 3.8, 15.9, 7.0)
-    volatile_acidity = st.sidebar.slider('volatile acidity', 0.08, 1.58, 0.4)
-    citric_acid  = st.sidebar.slider('citric acid', 0.0, 1.66, 0.3)
-    residual_sugar  = st.sidebar.slider('residual_sugar', 0.6, 65.8, 10.4)
-    chlorides  = st.sidebar.slider('chlorides', 0.009, 0.611, 0.211)
-    free_sulfur_dioxide = st.sidebar.slider('free sulfur dioxide', 1, 289, 200)
-    total_sulfur_dioxide = st.sidebar.slider('total sulfur dioxide', 6, 440, 150)
-    density = st.sidebar.slider('density', 0.98, 1.03, 1.0)
-    pH = st.sidebar.slider('pH', 2.72, 4.01, 3.0)
-    sulphates = st.sidebar.slider('sulphates', 0.22, 2.0, 1.0)
-    alcohol = st.sidebar.slider('alcohol', 8.0, 14.9, 13.4)
+  # wine_type = st.sidebar.selectbox("Select Wine type",("white", "red"))
+    ADJOE = st.sidebar.slider('Adjusted Offensive Efficiency', 80, 130, 110)
+    ADJDE = st.sidebar.slider('Adjusted Defensive Efficiency', 80, 130, 90)
+    BARTHAG  = st.sidebar.slider('Power Ranking', 0.0, 1.0, 0.6)
+    WAB  = st.sidebar.slider('Wins Above Bubble', -25, 15, 0)
+    EFG  = st.sidebar.slider('Effective Field Goal Percentage', 39, 60, 52)
+    EFG_D = st.sidebar.slider('Effective Field Goal Allowed', 35, 60, 47)
+    FTRD = st.sidebar.slider('Free Throws Allowed', 20, 60, 30)
+    #density = st.sidebar.slider('density', 0.98, 1.03, 1.0)
+   # pH = st.sidebar.slider('pH', 2.72, 4.01, 3.0)
+    #sulphates = st.sidebar.slider('sulphates', 0.22, 2.0, 1.0)
+   # alcohol = st.sidebar.slider('alcohol', 8.0, 14.9, 13.4)
     
     features = {'wine_type': wine_type,
-            'fixed_acidity': fixed_acidity,
-            'volatile_acidity': volatile_acidity,
-            'citric_acid': citric_acid,
-            'residual_sugar': residual_sugar,
-            'chlorides': chlorides,
-            'free_sulfur_dioxide': free_sulfur_dioxide,
-            'total_sulfur_dioxide': total_sulfur_dioxide,
-            'density': density,
-            'pH': pH,
-            'sulphates': sulphates,
-            'alcohol': alcohol
+            'ADJOE': ADJOE,
+            'ADJDE': ADJDE,
+            'BARTHAG': BARTHAG,
+            'WAB': WAB,
+            'EFG': EFG,
+            'EFG_D': EFG_D,
+            'FTRD': FTRD
+            
             }
     data = pd.DataFrame(features,index=[0])
 
