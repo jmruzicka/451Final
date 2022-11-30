@@ -8,13 +8,13 @@ from PIL import Image
 
 
 # Load  model a 
-model = joblib.load(open("model-v1.joblib","rb"))
+model = joblib.load(open("c:/CS-451/FinalProject/451Final/model1.joblib","rb")) #"C:\CS-451\FinalProject\451Final\model1.joblib"
 
 def data_preprocessor(df):
     """this function preprocess the user input
         return type: pandas dataframe
     """
-    df.wine_type = df.wine_type.map({'white':0, 'red':1})
+    #df.Postseason = df.Postseason.map({1:'Champions', 2:'Runner-Up', 4:'Final Four', 8:'Elite Eight', 16:'Sweet Sixteen', 32:'Round of 32', 64: 'Round of 64', 128:'No Dancing for your team'})
     return df
 
 def visualize_confidence_level(prediction_proba):
@@ -23,7 +23,7 @@ def visualize_confidence_level(prediction_proba):
     return type : matplotlib bar chart  
     """
     data = (prediction_proba[0]*100).round(2)
-    grad_percentage = pd.DataFrame(data = data,columns = ['Postseason'],index = ['Champions','Runner-Up','Final Four','Elite Eight','Sweet Sixteen','Round of 32','Round of 64', 'No Dancing for your team'])
+    grad_percentage = pd.DataFrame(data = data,columns = ['POSTSEASON'],index = ['Champions','Runner-Up','Final Four','Elite Eight','Sweet Sixteen','Round of 32','Round of 64', 'No Dancing for your team'])
     ax = grad_percentage.plot(kind='barh', figsize=(7, 4), color='#722f37', zorder=10, width=0.5)
     ax.legend().set_visible(False)
     ax.set_xlim(xmin=0, xmax=100)
@@ -52,7 +52,7 @@ This app predicts the postseason finish using basketball statistics input via th
 """)
 
 #read in wine image and render with streamlit
-image = Image.open('March_Madness_logo.svg.png')
+image = Image.open('C:/CS-451/FinalProject/451Final/March_Madness_logo.svg.png')
 st.image(image, caption='March Madness',use_column_width=True)
 
 st.sidebar.header('User Input Parameters') #user input parameter collection with streamlit side bar
