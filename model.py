@@ -8,7 +8,7 @@ from PIL import Image
 
 
 # Load  model a 
-model = joblib.load(open("model-v1 (3).joblib","rb"))
+model = joblib.load(open("model-v1.joblib","rb"))
 
 def data_preprocessor(df):
     """this function preprocess the user input
@@ -76,7 +76,7 @@ def get_user_input():
     #sulphates = st.sidebar.slider('sulphates', 0.22, 2.0, 1.0)
    # alcohol = st.sidebar.slider('alcohol', 8.0, 14.9, 13.4)
     
-    features = {'wine_type': wine_type,
+    features = {
             'ADJOE': ADJOE,
             'ADJDE': ADJDE,
             'BARTHAG': BARTHAG,
