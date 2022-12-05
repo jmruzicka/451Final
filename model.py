@@ -22,8 +22,14 @@ def visualize_confidence_level(prediction_proba):
     this function uses matplotlib to create inference bar chart rendered with streamlit in real-time 
     return type : matplotlib bar chart  
     """
+    #data.Postseason = data.Postseason.map({1:'Champions', 2:'Runner-Up', 4:'Final Four', 8:'Elite Eight', 16:'Sweet Sixteen', 32:'Round of 32', 64: 'Round of 64', 128:'No Dancing for your team'})
+
+
     data = (prediction_proba[0]*100).round(2)
-    grad_percentage = pd.DataFrame(data = data,columns = ['POSTSEASON'],index = ['Champions','Runner-Up','Final Four','Elite Eight','Sweet Sixteen','Round of 32','Round of 64', 'No Dancing for your team'])
+    #data.POSTSEASON = data.POSTSEASON.map({1:'Champions', 2:'Runner-Up', 4:'Final Four', 8:'Elite Eight', 16:'Sweet Sixteen', 32:'Round of 32', 64: 'Round of 64', 128:'No Dancing for your team'})
+    grad_percentage = pd.DataFrame(data = data,columns = ['POSTSEASON'],index = ['Champs','Champs', 'Runners-Up', 'Final Four', 'Elite Eight', 'Sweet Sixteen', 'Round of 32', 'Round of 64', 'No Dancing for your team'])
+    #grad_percentage = pd.DataFrame(data = data,columns = ['POSTSEASON'],index = ['Champions','Runner-Up','Final Four','Elite Eight','Sweet Sixteen','Round of 32','Round of 64', 'No Dancing for your team'])
+    #grad_percentage.rename({0:"Champions",1: 'Champions', 2: 'Runner-Up', 4: 'Final Four', 8: 'Elite Eight', 16: 'Sweet Sixteen', 32: 'Round of 32', 64: 'Round of 64', 128: 'No Dancing for your team'})
     ax = grad_percentage.plot(kind='barh', figsize=(7, 4), color='#722f37', zorder=10, width=0.5)
     ax.legend().set_visible(False)
     ax.set_xlim(xmin=0, xmax=100)
@@ -40,7 +46,7 @@ def visualize_confidence_level(prediction_proba):
         ax.axvline(x=tick, linestyle='dashed', alpha=0.4, color='#eeeeee', zorder=1)
 
     ax.set_xlabel(" Percentage(%) Confidence Level", labelpad=2, weight='bold', size=12)
-    ax.set_ylabel("Finish", labelpad=10, weight='bold', size=12)
+    ax.set_ylabel("Tournament Finish", labelpad=10, weight='bold', size=12)
     ax.set_title('Prediction Confidence Level ', fontdict=None, loc='center', pad=None, weight='bold')
 
     st.pyplot()
@@ -54,6 +60,8 @@ This app predicts the postseason finish using basketball statistics input via th
 #read in wine image and render with streamlit
 image = Image.open('C:/CS-451/FinalProject/451Final/March_Madness_logo.svg.png')
 st.image(image, caption='March Madness',use_column_width=True)
+#image2 = Image.open('C:/CS-451/FinalProject/451Final/key.png')
+#st.image(image2, caption='Graph Key',use_column_width=True)
 
 st.sidebar.header('User Input Parameters') #user input parameter collection with streamlit side bar
 
@@ -64,13 +72,14 @@ def get_user_input():
     return type : pandas dataframe
     """
   # wine_type = st.sidebar.selectbox("Select Wine type",("white", "red"))
-    ADJOE = st.sidebar.slider('Adjusted Offensive Efficiency', 80, 130, 110)
-    ADJDE = st.sidebar.slider('Adjusted Defensive Efficiency', 80, 130, 90)
-    BARTHAG  = st.sidebar.slider('Power Ranking', 0.0, 1.0, 0.6)
-    WAB  = st.sidebar.slider('Wins Above Bubble', -25, 15, 0)
-    EFG  = st.sidebar.slider('Effective Field Goal Percentage', 39, 60, 52)
-    EFG_D = st.sidebar.slider('Effective Field Goal Allowed', 35, 60, 47)
-    FTRD = st.sidebar.slider('Free Throws Allowed', 20, 60, 30)
+    ADJOE = st.sidebar.slider('Adjusted Offensive Efficiency', 80.0, 130.0, 120.0, 0.1)
+    ADJDE = st.sidebar.slider('Adjusted Defensive Efficiency', 80.0, 130.0, 84.0, 0.1)
+    BARTHAG  = st.sidebar.slider('Power Ranking', 0.0, 1.0, 0.8, 0.001)
+    #WAB  = st.sidebar.slider('Wins Above Bubble', -25.0, 15.0, 7.5, 0.01)
+    EFG_O  = st.sidebar.slider('Effective Field Goal Percentage', 39.0, 60.0, 52.0,0.1)
+    EFG_D = st.sidebar.slider('Effective Field Goal Allowed', 35.0, 60.0, 47.0,0.1)
+    FTRD = st.sidebar.slider('Free Throws Allowed', 20.0, 60.0, 30.0,0.1)
+    WAB  = st.sidebar.slider('Wins Above Bubble', -25.0, 15.0, 7.5, 0.01)
     #density = st.sidebar.slider('density', 0.98, 1.03, 1.0)
    # pH = st.sidebar.slider('pH', 2.72, 4.01, 3.0)
     #sulphates = st.sidebar.slider('sulphates', 0.22, 2.0, 1.0)
@@ -80,23 +89,31 @@ def get_user_input():
             'ADJOE': ADJOE,
             'ADJDE': ADJDE,
             'BARTHAG': BARTHAG,
-            'WAB': WAB,
-            'EFG': EFG,
+            'EFG_O': EFG_O,
             'EFG_D': EFG_D,
-            'FTRD': FTRD
-            
+            'FTRD': FTRD,
+            'WAB': WAB
             }
     data = pd.DataFrame(features,index=[0])
-
+    #data = data.tail(data.shape[0] -1)
+    #data.drop(columns=data.columns[0], axis=1, inplace=True)
+    #data.drop(index=data.index[0],  axis=0,  inplace=True)
+    #data = data.iloc[1:]
+    #print(data.loc[0])
+    #df1 = df.iloc[1:]
     return data
 
 user_input_df = get_user_input()
+print('test')
+print(user_input_df)
 processed_user_input = data_preprocessor(user_input_df)
-
+print(processed_user_input)
 st.subheader('User Input parameters')
 st.write(user_input_df)
-
+st.set_option('deprecation.showPyplotGlobalUse', False)
 prediction = model.predict(processed_user_input)
+print(prediction)
+#st.write(prediction)
 prediction_proba = model.predict_proba(processed_user_input)
 
 visualize_confidence_level(prediction_proba)
