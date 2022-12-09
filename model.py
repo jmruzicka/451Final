@@ -111,6 +111,8 @@ print(processed_user_input)
 st.subheader('User Input parameters')
 st.write(user_input_df)
 st.set_option('deprecation.showPyplotGlobalUse', False)
+#st.set_option('browser.gatherUsageStats', False)
+
 prediction = model.predict(processed_user_input)
 print(prediction)
 #st.write(prediction)
