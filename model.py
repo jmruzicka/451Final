@@ -8,7 +8,7 @@ import streamlit as st
 from PIL import Image
 
 # Load  model a 
-model = joblib.load(open("451Final/model1.joblib","rb")) #"C:\CS-451\FinalProject\451Final\model1.joblib"
+model = joblib.load(open("./model1.joblib","rb")) #"C:\CS-451\FinalProject\451Final\model1.joblib"
 
 def data_preprocessor(df):
     """this function preprocess the user input
