@@ -1,6 +1,6 @@
 import numpy as np 
 import pandas as pd 
-import joblib as jb
+import joblib
 import matplotlib.pyplot as plt
 from matplotlib.ticker import StrMethodFormatter
 import streamlit as st
@@ -8,7 +8,7 @@ from PIL import Image
 
 
 # Load  model a 
-model = jb.load(open("c:/CS-451/FinalProject/451Final/model1.joblib","rb")) #"C:\CS-451\FinalProject\451Final\model1.joblib"
+model = joblib.load(open("c:/CS-451/FinalProject/451Final/model1.joblib","rb")) #"C:\CS-451\FinalProject\451Final\model1.joblib"
 
 def data_preprocessor(df):
     """this function preprocess the user input
@@ -104,17 +104,17 @@ def get_user_input():
     return data
 
 user_input_df = get_user_input()
-print('test')
-print(user_input_df)
+#print('test')
+#print(user_input_df)
 processed_user_input = data_preprocessor(user_input_df)
-print(processed_user_input)
+#print(processed_user_input)
 st.subheader('User Input parameters')
 st.write(user_input_df)
 st.set_option('deprecation.showPyplotGlobalUse', False)
 #st.set_option('browser.gatherUsageStats', False)
 
 prediction = model.predict(processed_user_input)
-print(prediction)
+#print(prediction)
 #st.write(prediction)
 prediction_proba = model.predict_proba(processed_user_input)
 
