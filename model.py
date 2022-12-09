@@ -71,7 +71,7 @@ def get_user_input():
     this function is used to get user input using sidebar slider and selectbox 
     return type : pandas dataframe
     """
-  # wine_type = st.sidebar.selectbox("Select Wine type",("white", "red"))
+  
     ADJOE = st.sidebar.slider('Adjusted Offensive Efficiency', 80.0, 130.0, 120.0, 0.1)
     ADJDE = st.sidebar.slider('Adjusted Defensive Efficiency', 80.0, 130.0, 84.0, 0.1)
     BARTHAG  = st.sidebar.slider('Power Ranking', 0.0, 1.0, 0.8, 0.001)
@@ -80,10 +80,7 @@ def get_user_input():
     EFG_D = st.sidebar.slider('Effective Field Goal Allowed', 35.0, 60.0, 47.0,0.1)
     FTRD = st.sidebar.slider('Free Throws Allowed', 20.0, 60.0, 30.0,0.1)
     WAB  = st.sidebar.slider('Wins Above Bubble', -25.0, 15.0, 7.5, 0.01)
-    #density = st.sidebar.slider('density', 0.98, 1.03, 1.0)
-   # pH = st.sidebar.slider('pH', 2.72, 4.01, 3.0)
-    #sulphates = st.sidebar.slider('sulphates', 0.22, 2.0, 1.0)
-   # alcohol = st.sidebar.slider('alcohol', 8.0, 14.9, 13.4)
+  
     
     features = {
             'ADJOE': ADJOE,
