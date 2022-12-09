@@ -58,7 +58,7 @@ This app predicts the postseason finish using basketball statistics input via th
 """)
 
 #read in wine image and render with streamlit
-image = Image.open('C:/CS-451/FinalProject/451Final/March_Madness_logo.svg.png')
+image = Image.open('./March_Madness_logo.svg.png')
 st.image(image, caption='March Madness',use_column_width=True)
 #image2 = Image.open('C:/CS-451/FinalProject/451Final/key.png')
 #st.image(image2, caption='Graph Key',use_column_width=True)
